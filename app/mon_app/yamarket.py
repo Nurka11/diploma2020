@@ -5,6 +5,7 @@ from .models import Item
 
 from decimal import Decimal
 
+
 def get_html(url):
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36'
     r = requests.get(url, headers={'User-Agent': user_agent})
@@ -16,7 +17,8 @@ def get_html(url):
 def init_csv():
     with open('output/yamarket.csv', 'a') as f:
         writer = csv.writer(f)
-        writer.writerow(['id','name','url','price'])
+        writer.writerow(['id', 'name', 'url', 'price'])
+
 
 def write_csv(data, index):
     with open('output/yamarket.csv', 'a') as f:
@@ -40,12 +42,13 @@ def write_db(items):
             except TypeError:
                 price = None
             name = item.get('name')
-            _, created = Item.objects.update_or_create(url=url, defaults={'name': name, 'price': price, 'status': True })
+            _, created = Item.objects.update_or_create(url=url, defaults={'name': name, 'price': price, 'status': True})
             if created:
                 meta['created_count'] += 1
             else:
                 meta['updated_count'] += 1
     return meta
+
 
 def refined(s):
     s1 = s.replace(' ', '')
@@ -60,7 +63,7 @@ def get_page_data(html, index):
     # divs of items parsing
     divs = soup.find_all('div', class_="n-snippet-card2 i-bem b-zone b-spy-visible")
     for div in divs:
-        index+=1
+        index += 1
 
         # names and urls parsing
         divs_header = div.find_all('div', class_="n-snippet-card2__header")
@@ -86,15 +89,11 @@ def get_page_data(html, index):
                 price = ''
             data_price = {'price': price}
 
-
         # colecting in one dict.
         data = {'name': data_header['name'],
                 'url': data_header['url'],
                 'price': data_price['price']}
 
-
-        # write_csv(data, index)
-        # write_model(data)
         data_list.append(data)
     return data_list
 
@@ -111,7 +110,7 @@ def main():
         meta = write_db(product_list)
         print(f'--> {i}: {meta}')
         # get_page_data(get_html(url), index)
-        index+=48
+        index += 48
 
 
 if __name__ == '__main__':

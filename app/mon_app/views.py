@@ -3,11 +3,11 @@ import requests
 from bs4 import BeautifulSoup as BS
 import csv
 from .models import Item
-from .yamarket import main
+# from .yamarket import main
+from .mvideo import main
 
 
 def index(request):
-    # main()
     return render(request, 'yam_app/index.html')
 
 

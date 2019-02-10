@@ -28,21 +28,13 @@ status_false.short_description = "Status -> False"
 
 
 class ItemAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ['name', 'url', 'price', 'status']
+    list_display = ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'status']
     ordering = ['name']
     actions = [status_true, status_false]
-    fieldsets = [(None,               {'fields': ['name', 'price']}),
-                 ('Дополнительная информация', {'fields': ['url', 'status'], 'classes': ['collapse']})]
-    list_filter = ['status', 'price']
+    fieldsets = [(None, {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'url']}),
+                 ('Дополнительная информация', {'fields': ['status', 'categoryId', 'groupId'], 'classes': ['collapse']})]
+    list_filter = ['status', 'vendorName', 'categoryName']
     search_fields = ['name']
 
 
 admin.site.register(Item, ItemAdmin)
-
-
-
-class ItemAdmin(admin.ModelAdmin):
-
-    list_display = ('question_text', 'pub_date', 'was_published_recently')
-    list_filter = ['pub_date']
-    search_fields = ['question_text']

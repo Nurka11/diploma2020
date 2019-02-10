@@ -11,14 +11,11 @@
 
 <body>
   <br><br><br><br><br><br><br><br><br><br>
-  <form class="" action="{% url 'parsing_url' %}" method="get">
+  <form class="" action="{% url 'parsing_url' %}" method="post">
     {% csrf_token %}
     <div class="container">
       <div class="input-group flex-nowrap mt-5">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="addon-wrapping">https://market.yandex.ru/</span>
-        </div>
-        <input type="text" class="form-control" placeholder="Введите ссылку" aria-label="Username" aria-describedby="addon-wrapping">
+        <input id="url_target" name="url_target" type="text" class="form-control" placeholder="Введите ссылку" aria-describedby="url"  value="{{ url_target }}">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Парсить</button>
         </div>
