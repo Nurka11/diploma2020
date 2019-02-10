@@ -96,11 +96,11 @@ def write_db(items):
 
 
 def main():
-    url_target = 'https://www.mvideo.ru/fotoapparaty/zerkalnye-fotoapparaty-169'
-    count = 10
+    url_target = 'https://www.mvideo.ru/smartfony-i-svyaz/smartfony-205'
+    page_count = 10
 
     pattern = url_target + '/f/page={}'
-    for i in range(1, count):
+    for i in range(1, page_count):
         url = pattern.format(str(i))
         html = get_html(url)
         product_list = get_page_data(html)

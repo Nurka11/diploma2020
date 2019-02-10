@@ -33,7 +33,7 @@ class ItemAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     actions = [status_true, status_false]
     fieldsets = [(None, {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'url']}),
                  ('Дополнительная информация', {'fields': ['status', 'categoryId', 'groupId'], 'classes': ['collapse']})]
-    list_filter = ['status', 'vendorName', 'categoryName']
+    list_filter = ['status', 'categoryName', 'vendorName']
     search_fields = ['name']
 
 
