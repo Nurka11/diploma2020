@@ -1,8 +1,4 @@
 from django.shortcuts import render
-import requests
-from bs4 import BeautifulSoup as BS
-import csv
-from .models import Item
 # from .yamarket import main
 from .mvideo import main
 
@@ -12,5 +8,11 @@ def index(request):
 
 
 def parsing(request):
-    main()
-    return render(request, 'yam_app/success.html')
+    if request.method == 'GET':
+        return render(request, 'yam_app/index.html')
+    elif request.method == 'POST':
+        url_target = request.POST.get('url_target')
+        page_count = request.POST.get('page_count')
+        if url_target and page_count:
+            main(url_target, page_count)
+            return render(request, 'yam_app/success.html')

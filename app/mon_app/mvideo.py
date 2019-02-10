@@ -95,12 +95,12 @@ def write_db(items):
     return meta
 
 
-def main():
-    url_target = 'https://www.mvideo.ru/smartfony-i-svyaz/smartfony-205'
-    page_count = 10
+def main(url_target, page_count):
+    # url_target = 'https://www.mvideo.ru/smartfony-i-svyaz/smartfony-205'
+    # page_count = 10
 
     pattern = url_target + '/f/page={}'
-    for i in range(1, page_count):
+    for i in range(1, int(page_count)):
         url = pattern.format(str(i))
         html = get_html(url)
         product_list = get_page_data(html)
