@@ -49,7 +49,7 @@ def get_page_data(html):
                     'price': price,
                     'categoryId': categoryId,
                     'categoryName': categoryName,
-                    'vendorName': vendorName,
+                    'vendorName': vendorName.lower().title(),
                     'groupId': groupId,
                     'url': url,
                     'shop': shop}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
-# from .monarket import main
+
 from .mvideo import mvideo
-from .citilink import citilink
+# from .citilink import citilink
 
 
 def index(request):
@@ -15,5 +15,5 @@ def parsing(request):
         url_target = request.POST.get('url_target')
         page_count = request.POST.get('page_count')
         if url_target and page_count:
-            citilink(url_target, page_count)
+            mvideo(url_target, page_count)
             return render(request, 'mon_app/success.html')

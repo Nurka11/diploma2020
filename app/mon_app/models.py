@@ -12,6 +12,7 @@ class Item(models.Model):
     url = models.SlugField(verbose_name='Ссылка', max_length=300, unique=True)
     status = models.BooleanField(verbose_name='Статус', default=True)
     shop = models.SlugField(verbose_name='Магазин', max_length=300, blank=True, null=True)
+    created = models.DateTimeField(verbose_name='Дата', auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return self.name

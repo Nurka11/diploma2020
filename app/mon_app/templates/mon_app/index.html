@@ -18,13 +18,14 @@
   Более 7 форматов экспорта результатов парсинга. Сохраняйте в удобном виде для последующего редактирования и экспорта в свой магазин.</p>
   <hr class="my-4">
   <p>Введите конечную ссылку на интересующую вас категорию товаров и количество страниц, которые надо спарсить</p>
-  
+
   <form class="" action="{% url 'parsing_url' %}" method="post">
     {% csrf_token %}
     <div class="container">
       <div class="input-group flex-nowrap mt-5">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1" style="background-color: #ffffff;"><a href="https://www.mvideo.ru/"><img src="{% static "mon_app/images/mvideo_logo.jpg" %}" height="20"></img></a></span>
+        <span class="input-group-text" id="basic-addon1" style="background-color: #ffffff;"><a href="https://www.citilink.ru/"><img src="{% static "mon_app/images/citilink_logo.png" %}" height="18"></img></a></span>
       </div>
         <input id="url_target" name="url_target" type="text" class="form-control" placeholder="Введите ссылку" aria-describedby="url_target"  value="{{ url_target }}">
         <input id="page_count" name="page_count" type="text" class="form-control" placeholder="Введите количество страниц" aria-describedby="page_count"  value="{{ page_count }}">

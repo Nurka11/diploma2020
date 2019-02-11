@@ -36,7 +36,7 @@ def get_page_data(html):
                 'price': price,
                 'categoryId': categoryId,
                 'categoryName': categoryName,
-                'vendorName': vendorName,
+                'vendorName': vendorName.lower().title(),
                 'url': url,
                 'shop': shop}
 
