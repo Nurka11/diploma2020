@@ -42,6 +42,7 @@ def get_page_data(html):
             categoryName = dict.get('productCategoryName')
             vendorName = dict.get('productVendorName')
             groupId = dict.get('productGroupId')
+            shop = 'М.видео'
 
             data = {'id_product': id_product,
                     'name': name,
@@ -50,7 +51,8 @@ def get_page_data(html):
                     'categoryName': categoryName,
                     'vendorName': vendorName,
                     'groupId': groupId,
-                    'url': url}
+                    'url': url,
+                    'shop': shop}
 
             print(data)
             data_list.append(data)
@@ -72,6 +74,7 @@ def write_db(items):
                 categoryName = item.get('categoryName')
                 vendorName = item.get('vendorName')
                 groupId = item.get('groupId')
+                shop = item.get('shop')
             except TypeError:
                 id_product = None
                 price = None
@@ -79,6 +82,7 @@ def write_db(items):
                 categoryName = None
                 vendorName = None
                 groupId = None
+                shop = None
             name = item.get('name')
             _, created = Item.objects.update_or_create(url=url, defaults={'id_product': id_product,
                                                                           'name': name,
@@ -87,7 +91,8 @@ def write_db(items):
                                                                           'categoryName': categoryName,
                                                                           'vendorName': vendorName,
                                                                           'groupId': groupId,
-                                                                          'status': True})
+                                                                          'status': True,
+                                                                          'shop': shop})
             if created:
                 meta['created_count'] += 1
             else:
@@ -95,7 +100,7 @@ def write_db(items):
     return meta
 
 
-def main(url_target, page_count):
+def mvideo(url_target, page_count):
     # url_target = 'https://www.mvideo.ru/smartfony-i-svyaz/smartfony-205'
     # page_count = 10
 
@@ -109,4 +114,4 @@ def main(url_target, page_count):
 
 
 if __name__ == '__main__':
-    main()
+    mvideo()

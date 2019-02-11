@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <div class="jumbotron" style="background-color: #ffffff; padding-bottom: 0px;">
+  <div class="jumbotron" style="background-color: #ffffff; padding-bottom: 0px; padding-top: 32px;">
   <h1 class="display-4">Парсер mvideo.ru</h1>
   <p class="lead">Парсер Mvideo автоматически получает информацию о товарах с сайта mvideo.ru по заданным категориям.</p>
   <p>Парсер собирает подробную информацию по товарам с сайта mvideo.ru (наименование, артикул, цену, категорию, URL и другие). Для работы Вам нужно указать только ссылку на нужную категорию или подкатегорию.
@@ -28,11 +28,28 @@
         <input id="url_target" name="url_target" type="text" class="form-control" placeholder="Введите ссылку" aria-describedby="url_target"  value="{{ url_target }}">
         <input id="page_count" name="page_count" type="text" class="form-control" placeholder="Введите количество страниц" aria-describedby="page_count"  value="{{ page_count }}">
         <div class="input-group-append">
-          <button class="btn btn-outline-danger" type="submit" id="url_tagret">Парсить</button>
+          <button class="btn btn-danger" type="submit" id="url_tagret">Парсить</button>
         </div>
       </div>
     </div>
   </form>
+
+<!-- <form class="" action="{% url 'parsing_url' %}" method="post"> -->
+  {% csrf_token %}
+  <div class="container">
+    <div class="input-group flex-nowrap mt-5">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1" style="background-color: #ffffff;"><a href="https://www.mvideo.ru/"><img src="{% static "mon_app/images/dns_logo.png" %}" height="20"></img></a></span>
+    </div>
+      <input id="url_target" name="url_target" type="text" class="form-control" placeholder="Введите ссылку" aria-describedby="url_target"  value="{{ url_target }}">
+      <input id="page_count" name="page_count" type="text" class="form-control" placeholder="Введите количество страниц" aria-describedby="page_count"  value="{{ page_count }}">
+      <div class="input-group-append">
+        <button class="btn btn-warning" type="submit" id="url_tagret">Парсить</button>
+      </div>
+    </div>
+  </div>
+</form>
+
   <br><br>
   <center><a class="btn btn-primary" href="{% url 'admin:index' %}">Панель администатора</a></center>
   </div>

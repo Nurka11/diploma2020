@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # from .yamarket import main
-from .mvideo import main
+from .mvideo import mvideo
 
 
 def index(request):
@@ -14,5 +14,5 @@ def parsing(request):
         url_target = request.POST.get('url_target')
         page_count = request.POST.get('page_count')
         if url_target and page_count:
-            main(url_target, page_count)
+            mvideo(url_target, page_count)
             return render(request, 'yam_app/success.html')
