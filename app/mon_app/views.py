@@ -29,7 +29,7 @@ def parsing(request):
         if url_target and page_count:
 
             # Checking valid of page_count
-            if re.match(r'\d{2}\b', page_count) and not re.match('0', page_count):
+            if re.match(r'\d\b', page_count) and not re.match('0', page_count):
 
                 # If target_url - mvideo
                 if re.match('https://www.mvideo.ru/', url_target):
