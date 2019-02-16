@@ -105,12 +105,17 @@ def mvideo(url_target, page_count):
     # page_count = 10
 
     pattern = url_target + '/f/page={}'
-    for i in range(1, int(page_count)):
+    for i in range(1, int(page_count) + 1):
         url = pattern.format(str(i))
         html = get_html(url)
         product_list = get_page_data(html)
+        write_db(product_list)
+        product_count_on_page = len(product_list)
+        print("-" * 42 + "\nНа странице номер {} получено {} продуктов".format(i, product_count_on_page) + "\n" + "-" * 42)
         meta = write_db(product_list)
         print(f'--> {i}: {meta}')
+    all_product_count = int(product_count_on_page) * int(page_count)
+    print("-" * 42 + "\nВсего на странице {} получено {} продуктов".format(url_target, all_product_count) + "\n" + "-" * 42)
 
 
 if __name__ == '__main__':
