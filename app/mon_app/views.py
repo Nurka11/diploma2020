@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from .mvideo import mvideo
 from .citilink import citilink
+from .wildberries import wildberries
 import re
 
 
@@ -29,6 +30,10 @@ def parsing(request):
                 # If target_url - citilink
                 elif re.match('https://www.citilink.ru/', url_target):
                     citilink(url_target, page_count)
+
+                # If target_url - citilink
+                elif re.match('https://www.wildberries.ru/', url_target):
+                    wildberries(url_target, page_count)
 
                 # If target_url invalid
                 else:
