@@ -10,6 +10,14 @@ def index(request):
     return render(request, 'mon_app/index.html')
 
 
+def support(request):
+    return render(request, 'mon_app/support/support.html')
+
+
+def other(request):
+    return render(request, 'mon_app/other/other.html')
+
+
 def parsing(request):
     if request.method == 'GET':
         return render(request, 'mon_app/index.html')
@@ -21,7 +29,7 @@ def parsing(request):
         if url_target and page_count:
 
             # Checking valid of page_count
-            if re.match(r'\d\b', page_count) and not re.match('0', page_count):
+            if re.match(r'\d{2}\b', page_count) and not re.match('0', page_count):
 
                 # If target_url - mvideo
                 if re.match('https://www.mvideo.ru/', url_target):

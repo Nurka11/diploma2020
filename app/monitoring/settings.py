@@ -1,7 +1,6 @@
 import os
 
 ADMIN_SITE_HEADER = "Parsing Admin Panel"
-# ADMIN_SITE_HEADER = " "
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -14,8 +13,7 @@ ALLOWED_HOSTS = []
 STATIC_URL = '/static/'
 
 INSTALLED_APPS = [
-    # 'grappelli',
-    # 'suit',
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -91,3 +89,33 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+
+# Django Suit configuration example
+SUIT_CONFIG = {
+    # header
+    'ADMIN_NAME': 'Мониторинг цен',
+    'HEADER_DATE_FORMAT': 'l, j. F Y',
+    'HEADER_TIME_FORMAT': 'H:i',
+
+    # forms
+    'SHOW_REQUIRED_ASTERISK': True,  # Default True
+    'CONFIRM_UNSAVED_CHANGES': True, # Default True
+
+    # menu
+    'SEARCH_URL': '/admin/mon_app/item/',
+    'MENU_ICONS': {
+       'sites': 'icon-leaf',
+       'auth': 'icon-lock',
+    },
+    # 'MENU_OPEN_FIRST_CHILD': True, # Default True
+    'MENU_EXCLUDE': ('mon_app.item',),
+    'MENU': (
+        # 'sites',
+        {'app': 'mon_app', 'icon':'icon-leaf', 'url': '/admin/mon_app/item/'},
+        {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
+        {'label': 'Помощь', 'icon':'icon-question-sign', 'url': '/support/'},
+    ),
+
+    # misc
+    'LIST_PER_PAGE': 15
+}

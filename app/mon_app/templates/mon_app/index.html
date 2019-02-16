@@ -8,30 +8,23 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>Введите ссылку</title>
-  <link rel="stylesheet" href="{% static 'mon_app/css/exception.css' %}">
+  <link rel="stylesheet" href="{% static 'mon_app/css/index.css' %}">
+  <link rel="shortcut icon" type="image/png" href="{% static 'mon_app/images/favicon.ico' %}">
 </head>
 
 <body>
-  <svg width="380px" height="500px" viewBox="0 0 837 1045" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-      <path d="M353,9 L626.664028,170 L626.664028,487 L353,642 L79.3359724,487 L79.3359724,170 L353,9 Z" id="Polygon-1" stroke="#007FB2" stroke-width="6" sketch:type="MSShapeGroup"></path>
-      <path d="M78.5,529 L147,569.186414 L147,648.311216 L78.5,687 L10,648.311216 L10,569.186414 L78.5,529 Z" id="Polygon-2" stroke="#EF4A5B" stroke-width="6" sketch:type="MSShapeGroup"></path>
-      <path d="M773,186 L827,217.538705 L827,279.636651 L773,310 L719,279.636651 L719,217.538705 L773,186 Z" id="Polygon-3" stroke="#795D9C" stroke-width="6" sketch:type="MSShapeGroup"></path>
-      <path d="M639,529 L773,607.846761 L773,763.091627 L639,839 L505,763.091627 L505,607.846761 L639,529 Z" id="Polygon-4" stroke="#F2773F" stroke-width="6" sketch:type="MSShapeGroup"></path>
-      <path d="M281,801 L383,861.025276 L383,979.21169 L281,1037 L179,979.21169 L179,861.025276 L281,801 Z" id="Polygon-5" stroke="#36B455" stroke-width="6" sketch:type="MSShapeGroup"></path>
-    </g>
-  </svg>
-
   <br><br><br><br><br><br><br><br><br>
   <form class="" action="{% url 'parsing_url' %}" method="post">
     {% csrf_token %}
     <div class="container">
       <div class="input-group flex-nowrap mt-5">
-
         <input id="url_target" name="url_target" type="text" class="form-control" placeholder="Введите ссылку" aria-describedby="url_target" value="{{ url_target }}">
-        <input id="page_count" name="page_count" type="text" class="form-control" placeholder="Введите количество страниц" aria-describedby="page_count" value="{{ page_count }}">
+        <!-- <input id="page_count" name="page_count" type="text" class="form-control" placeholder="Введите количество страниц" aria-describedby="page_count" value="{{ page_count }}"> -->
         <div class="input-group-append">
-          <button class="btn btn-danger" type="submit" id="url_tagret">Парсить</button>
+            <input id="page_count" name="page_count" type="text" class="form-control" placeholder="Введите кол-во страниц" aria-describedby="page_count" value="{{ page_count }}">
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-success" type="submit" id="url_tagret">Парсить</button>
         </div>
       </div>
     </div>
@@ -39,17 +32,27 @@
 
   <div class="container col-md-4">
     <div class="input-group flex-nowrap mt-5">
-
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1" style="background-color: #ffffff;"><a href="https://www.mvideo.ru/"><img src="{% static "mon_app/images/mvideo_logo.jpg" %}" height="20"></img></a></span>
         <span class="input-group-text" id="basic-addon1" style="background-color: #ffffff;"><a href="https://www.citilink.ru/"><img src="{% static "mon_app/images/citilink_logo.png" %}" height="18"></img></a></span>
         <span class="input-group-text" id="basic-addon1" style="background-color: #ffffff;"><a href="https://www.wildberries.ru/"><img src="{% static "mon_app/images/wildberries_logo.png" %}" height="18"></img></a></span>
       </div>
       <div class="input-group-append">
-        <a class="btn btn-primary" href="{% url 'admin:index' %}">Панель администатора</a>
+        <a class="btn btn-success" href="{% url 'admin:index' %}">Панель администатора</a>
       </div>
     </div>
   </div>
+
+  <br><br><br><br><br><br><br><br>
+  <div class="container col-md-3">
+    <div class="input-group flex-nowrap mt-5">
+      <div class="input-group">
+        <a style="color: white" class="btn" href="{% url 'support_url' %}">Поддержка</a>
+        <a style="color: white" class="btn" href="{% url 'other_url' %}">Демо</a>
+      </div>
+    </div>
+  </div>
+
 
 </body>
 

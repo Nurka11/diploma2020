@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class YamAppConfig(AppConfig):
-    name = 'yam_app'
+class MonAppConfig(AppConfig):
+    name = 'mon_app'
+    verbose_name = "Мониторинг цен"

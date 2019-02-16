@@ -12,7 +12,7 @@ def status_true(modeladmin, request, queryset):
     modeladmin.message_user(request, "%s successfully marked as True." % message_bit)
 
 
-status_true.short_description = "Status -> True"
+status_true.short_description = "Активный статус"
 
 
 def status_false(modeladmin, request, queryset):
@@ -24,7 +24,7 @@ def status_false(modeladmin, request, queryset):
     modeladmin.message_user(request, "%s successfully marked as False." % message_bit)
 
 
-status_false.short_description = "Status -> False"
+status_false.short_description = "Неактивный статус"
 
 
 class ItemAdmin(ImportExportModelAdmin, admin.ModelAdmin):
@@ -33,7 +33,7 @@ class ItemAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     actions = [status_true, status_false]
     fieldsets = [(None, {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'url']}),
                  ('Дополнительная информация', {'fields': ['status', 'categoryId', 'groupId', 'shop'], 'classes': ['collapse']})]
-    list_filter = ['status', 'categoryName', 'shop', 'created', 'vendorName']
+    list_filter = ['categoryName', 'shop', 'created', 'vendorName']
     search_fields = ['name']
 
 
