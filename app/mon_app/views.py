@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 from .mvideo import mvideo
-# from .citilink import citilink
+from .citilink import citilink
+import re
 
 
 def index(request):
@@ -14,6 +15,39 @@ def parsing(request):
     elif request.method == 'POST':
         url_target = request.POST.get('url_target')
         page_count = request.POST.get('page_count')
+
+        # Check if there is a url_target and page_count
         if url_target and page_count:
-            mvideo(url_target, page_count)
-            return render(request, 'mon_app/success.html')
+
+            # Checking valid of page_count
+            if re.match(r'\d\b', page_count):
+
+                # If target_url - mvideo
+                if re.match('https://www.mvideo.ru/', url_target):
+                    mvideo(url_target, page_count)
+
+                # If target_url - citilink
+                elif re.match('https://www.citilink.ru/', url_target):
+                    citilink(url_target, page_count)
+
+                # If target_url invalid
+                else:
+                    return render(request, 'mon_app/exceptions/invalid_url.html')
+
+            # If page_count invalid
+            else:
+                return render(request, 'mon_app/exceptions/invalid_page_count.html')
+
+        # If page_count doesn`t exist
+        elif url_target and not page_count:
+            return render(request, 'mon_app/exceptions/not_page_count.html')
+
+        # If url_target doesn`t exist
+        elif page_count and not url_target:
+            return render(request, 'mon_app/exceptions/not_url_target.html')
+
+        # If nothing exist
+        else:
+            return render(request, 'mon_app/exceptions/not_arguments.html')
+
+        return render(request, 'mon_app/success.html')
