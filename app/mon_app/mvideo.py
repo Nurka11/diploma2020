@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup as BS
 from .models import Item
 
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 
 def get_html(url):
@@ -68,22 +68,21 @@ def write_db(items):
         url = item.get('url')
         if url:
             try:
-                id_product = int(item.get('id_product'))
                 price = Decimal(item.get('price'))
-                categoryId = item.get('categoryId')
-                categoryName = item.get('categoryName')
-                vendorName = item.get('vendorName')
-                groupId = item.get('groupId')
-                shop = item.get('shop')
-            except TypeError:
-                id_product = None
+            except InvalidOperation:
                 price = None
-                categoryId = None
-                categoryName = None
-                vendorName = None
-                groupId = None
-                shop = None
+            try:
+                id_product = int(item.get('id_product'))
+            except ValueError:
+                id_product = None
+
+            categoryId = item.get('categoryId')
+            categoryName = item.get('categoryName')
+            vendorName = item.get('vendorName')
+            groupId = item.get('groupId')
+            shop = item.get('shop')
             name = item.get('name')
+
             _, created = Item.objects.update_or_create(url=url, defaults={'id_product': id_product,
                                                                           'name': name,
                                                                           'price': price,

@@ -5,7 +5,7 @@ import json
 from decimal import Decimal, InvalidOperation
 
 
-class HttpException2(Exception):
+class HttpException(Exception):
     pass
 
 
@@ -59,6 +59,7 @@ def write_db(items):
 
     for item in items:
         url = item.get('url')
+
         if url:
             try:
                 price = Decimal(item.get('price'))
