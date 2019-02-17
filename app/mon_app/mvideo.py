@@ -42,7 +42,7 @@ def get_page_data(html):
             categoryName = d.get('productCategoryName')
             vendorName = d.get('productVendorName')
             groupId = d.get('productGroupId')
-            shop = 'M'
+            shop = 'М.видео'
 
             data = {'id_product': id_product,
                     'name': name,

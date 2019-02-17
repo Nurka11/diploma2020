@@ -78,18 +78,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'ru-ru'
-
-TIME_ZONE = 'Europe/Moscow'
-
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-STATIC_URL = '/static/'
-
 # Django Suit configuration example
 SUIT_CONFIG = {
     # header
@@ -117,5 +105,17 @@ SUIT_CONFIG = {
     ),
 
     # misc
-    'LIST_PER_PAGE': 15
+    'LIST_PER_PAGE': 25
 }
+
+LANGUAGE_CODE = 'ru-ru'
+
+TIME_ZONE = 'Europe/Moscow'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
+
+STATIC_URL = '/static/'

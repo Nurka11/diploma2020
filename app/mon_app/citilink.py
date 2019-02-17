@@ -36,7 +36,7 @@ def get_page_data(html):
         name = data['shortName']
         categoryName = data['categoryName']
         vendorName = data['brandName']
-        shop = 'C'
+        shop = 'Ситилинк'
 
         data = {'id_product': id_product,
                 'name': name,

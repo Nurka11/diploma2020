@@ -33,7 +33,7 @@ def get_page_data(html):
         categoryName = soup.find('div', class_='breadcrumbs').find_all('span')[-1].text.strip()
         url = div.find('a', class_='ref_goods_n_p').get('href')
         vendorName = div.find('div', class_='dtlist-inner-brand-name').find('strong').text.strip().replace(' /', '')
-        shop = 'W'
+        shop = 'Wildberries'
 
         data = {'id_product': id_product,
                 'name': name,
