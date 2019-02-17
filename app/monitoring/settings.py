@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mon_app',
+    'mon_app.apps.MonAppConfig',
     'import_export'
 ]
 

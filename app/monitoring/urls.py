@@ -4,7 +4,6 @@ from django.conf import settings
 from django.urls import include
 
 urlpatterns = [
-    # path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('', include('mon_app.urls'))]
 

@@ -2,7 +2,11 @@ import requests
 from bs4 import BeautifulSoup as BS
 from .models import Item
 import json
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
+
+
+class HttpException2(Exception):
+    pass
 
 
 def get_html(url):
@@ -10,7 +14,10 @@ def get_html(url):
     r = requests.get(url, headers={'User-Agent': user_agent})
     if r.ok:
         return r.text
-    print(r.status_code)
+    else:
+        exp = HttpException()
+        exp.status_code = r.status_code
+        raise exp
 
 
 def get_page_data(html):
@@ -23,7 +30,7 @@ def get_page_data(html):
         url = div.find('a', class_='link_gtm-js link_pageevents-js ddl_product_link').get('href')
         data = json.loads(json_product)
 
-        id_product = data['id']
+        id_product = data.get('id')
         categoryId = data['categoryId']
         price = data['price']
         name = data['shortName']
@@ -54,22 +61,21 @@ def write_db(items):
         url = item.get('url')
         if url:
             try:
-                id_product = int(item.get('id_product'))
                 price = Decimal(item.get('price'))
-                categoryId = item.get('categoryId')
-                categoryName = item.get('categoryName')
-                vendorName = item.get('vendorName')
-                groupId = item.get('groupId')
-                shop = item.get('shop')
-            except TypeError:
-                id_product = None
+            except InvalidOperation:
                 price = None
-                categoryId = None
-                categoryName = None
-                vendorName = None
-                groupId = None
-                shop = None
+            try:
+                id_product = int(item.get('id_product'))
+            except ValueError:
+                id_product = None
+
+            categoryId = item.get('categoryId')
+            categoryName = item.get('categoryName')
+            vendorName = item.get('vendorName')
+            groupId = item.get('groupId')
+            shop = item.get('shop')
             name = item.get('name')
+
             _, created = Item.objects.update_or_create(url=url, defaults={'id_product': id_product,
                                                                           'name': name,
                                                                           'price': price,

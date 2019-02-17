@@ -4,7 +4,6 @@ from .models import Item
 
 from decimal import Decimal
 
-
 def get_html(url):
     user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36'
     r = requests.get(url, headers={'User-Agent': user_agent})
@@ -90,9 +89,6 @@ def write_db(items):
 
 
 def wildberries(url_target, page_count):
-    # url = 'https://www.wildberries.ru/catalog/elektronika/igry-i-razvlecheniya/aksessuary/garnitury'
-    # page_count = 10
-
     pattern = url_target + '?page={}'
     for i in range(1, int(page_count) + 1):
         url = pattern.format(str(i))
