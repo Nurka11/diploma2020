@@ -1,17 +1,16 @@
 import requests
-from bs4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup
 from .models import Item
 import json
 from decimal import Decimal, InvalidOperation
-
+import os
 
 class HttpException(Exception):
     pass
 
 
 def get_html(url):
-    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36'
-    r = requests.get(url, headers={'User-Agent': user_agent})
+    r = requests.get(url, headers={'User-Agent': os.environ['user_agent']})
     if r.ok:
         return r.text
     else:
@@ -22,7 +21,7 @@ def get_html(url):
 
 def get_page_data(html):
     data_list = []
-    soup = BS(html, 'lxml')
+    soup = BeautifulSoup(html, 'lxml')
     divs = soup.find_all('div', class_='subcategory-product-item')
 
     for div in divs:
@@ -101,12 +100,12 @@ def citilink(url_target, page_count):
         product_list = get_page_data(html)
         write_db(product_list)
         product_count_on_page = len(product_list)
-        print("-" * 42 + "\nНа странице номер {} получено {} продуктов".format(i, product_count_on_page) + "\n" + "-" * 42)
+        print("-" * 42 + "\n")
+        print("На странице номер {} получено {} продуктов".format(i, product_count_on_page) + "\n")
+        print("-" * 42 + "\n")
         meta = write_db(product_list)
         print(f'--> {i}: {meta}')
     all_product_count = int(product_count_on_page) * int(page_count)
-    print("-" * 42 + "\nВсего на странице {} получено {} продуктов".format(url_target, all_product_count) + "\n" + "-" * 42)
-
-
-if __name__ == '__main__':
-    citilink()
+    print("-" * 42 + "\n")
+    print("Всего на странице {} получено {} продуктов".format(url_target, all_product_count) + "\n")
+    print("-" * 42 + "\n")

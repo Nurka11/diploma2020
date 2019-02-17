@@ -1,13 +1,12 @@
 import requests
-from bs4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup
 from .models import Item
-
+import os
 from decimal import Decimal, InvalidOperation
 
 
 def get_html(url):
-    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36'
-    r = requests.get(url, headers={'User-Agent': user_agent})
+    r = requests.get(url, headers={'User-Agent': os.environ['user_agent']})
     if r.ok:
         return r.text
     print(r.status_code)
@@ -22,7 +21,7 @@ def refined(s):
 
 def get_page_data(html):
     data_list = []
-    soup = BS(html, 'lxml')
+    soup = BeautifulSoup(html, 'lxml')
     divs = soup.find_all('a', class_="sel-product-tile-title")
 
     for div in divs:
@@ -33,15 +32,15 @@ def get_page_data(html):
             refined_product = refined(product)
             p = '{' + refined_product
 
-            dict = eval(p)
+            d = eval(p)
 
-            id_product = dict.get('productId')
-            name = dict.get('productName')
-            price = dict.get('productPriceLocal')
-            categoryId = dict.get('productCategoryId')
-            categoryName = dict.get('productCategoryName')
-            vendorName = dict.get('productVendorName')
-            groupId = dict.get('productGroupId')
+            id_product = d.get('productId')
+            name = d.get('productName')
+            price = d.get('productPriceLocal')
+            categoryId = d.get('productCategoryId')
+            categoryName = d.get('productCategoryName')
+            vendorName = d.get('productVendorName')
+            groupId = d.get('productGroupId')
             shop = 'М.видео'
 
             data = {'id_product': id_product,
@@ -100,9 +99,6 @@ def write_db(items):
 
 
 def mvideo(url_target, page_count):
-    # url_target = 'https://www.mvideo.ru/smartfony-i-svyaz/smartfony-205'
-    # page_count = 10
-
     pattern = url_target + '/f/page={}'
     for i in range(1, int(page_count) + 1):
         url = pattern.format(str(i))
@@ -115,7 +111,3 @@ def mvideo(url_target, page_count):
         print(f'--> {i}: {meta}')
     all_product_count = int(product_count_on_page) * int(page_count)
     print("-" * 42 + "\nВсего на странице {} получено {} продуктов".format(url_target, all_product_count) + "\n" + "-" * 42)
-
-
-if __name__ == '__main__':
-    mvideo()

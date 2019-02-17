@@ -1,13 +1,12 @@
 import requests
-from bs4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup
 from .models import Item
-
+import os
 from decimal import Decimal, InvalidOperation
 
 
 def get_html(url):
-    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36'
-    r = requests.get(url, headers={'User-Agent': user_agent})
+    r = requests.get(url, headers={'User-Agent': os.environ['user_agent']})
     if r.ok:
         return r.text
     print(r.status_code)
@@ -22,7 +21,7 @@ def refined(s):
 
 def get_page_data(html):
     data_list = []
-    soup = BS(html, 'lxml')
+    soup = BeautifulSoup(html, 'lxml')
 
     divs = soup.find_all('div', class_='dtList')
     for div in divs:

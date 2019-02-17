@@ -28,7 +28,7 @@ status_false.short_description = "Неактивный статус"
 
 
 class ItemAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'created', 'status']
+    list_display = ('id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'created', 'status')
     ordering = ['name']
     actions = [status_true, status_false]
     fieldsets = [(None, {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'url']}),
