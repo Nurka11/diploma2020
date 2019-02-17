@@ -6,7 +6,8 @@ from decimal import Decimal, InvalidOperation
 
 
 def get_html(url):
-    r = requests.get(url, headers={'User-Agent': os.environ['user_agent']})
+    user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.81 Safari/537.36'
+    r = requests.get(url, headers={'User-Agent': user_agent})
     if r.ok:
         return r.text
     print(r.status_code)
@@ -41,7 +42,7 @@ def get_page_data(html):
             categoryName = d.get('productCategoryName')
             vendorName = d.get('productVendorName')
             groupId = d.get('productGroupId')
-            shop = 'М.видео'
+            shop = 'M'
 
             data = {'id_product': id_product,
                     'name': name,

@@ -31,8 +31,8 @@ class ItemAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'created', 'status')
     ordering = ['name']
     actions = [status_true, status_false]
-    fieldsets = [(None, {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'url']}),
-                 ('Дополнительная информация', {'fields': ['status', 'categoryId', 'groupId', 'shop'], 'classes': ['collapse']})]
+    fieldsets = [(None, {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'url']}),
+                 ('Дополнительная информация', {'fields': ['status', 'categoryId', 'groupId'], 'classes': ['collapse']})]
     list_filter = ['categoryName', 'shop', 'created', 'vendorName']
     search_fields = ['name']
 
