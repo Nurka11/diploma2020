@@ -96,10 +96,10 @@ SUIT_CONFIG = {
        'auth': 'icon-lock',
     },
     # 'MENU_OPEN_FIRST_CHILD': True, # Default True
-    'MENU_EXCLUDE': ('mon_app.item',),
+    # 'MENU_EXCLUDE': ('mon_app.item',),
     'MENU': (
         # 'sites',
-        {'app': 'mon_app', 'icon':'icon-leaf', 'url': '/admin/mon_app/item/'},
+        {'app': 'mon_app', 'icon': 'icon-cog', 'url': '/admin/mon_app/'},
         {'app': 'auth', 'icon':'icon-lock', 'models': ('user', 'group')},
         {'label': 'Помощь', 'icon':'icon-question-sign', 'url': '/support/'},
     ),

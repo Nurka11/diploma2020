@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item
+from .models import Item, Match
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -31,10 +31,21 @@ class ItemAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'created', 'status')
     ordering = ['name']
     actions = [status_true, status_false]
-    fieldsets = [(None, {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'url']}),
-                 ('Дополнительная информация', {'fields': ['status', 'categoryId', 'groupId'], 'classes': ['collapse']})]
+    fieldsets = [('Основная информация', {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'url']}),
+                 ('Дополнительная информация', {'fields': ['categoryId', 'groupId', 'status']})]
     list_filter = ['categoryName', 'shop', 'created', 'vendorName']
     search_fields = ['name']
 
 
+class MatchAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ('id_product_my', 'name_my', 'price_my', 'id_product_conc', 'name_conc', 'price_conc', 'diff', 'status', 'created')
+    ordering = ['name_my']
+    actions = [status_true, status_false]
+    fieldsets = [('Первый товар', {'fields': ['id_product_my', 'name_my', 'price_my']}),
+                 ('Второй товар', {'fields': ['id_product_conc', 'name_conc', 'price_conc']})]
+    list_filter = ['created']
+    search_fields = ['name_my']
+
+
 admin.site.register(Item, ItemAdmin)
+admin.site.register(Match, MatchAdmin)
