@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from .models import Item
+from .models import CompetitorProduct
 import os
 from decimal import Decimal, InvalidOperation
 
@@ -59,31 +59,31 @@ def get_page_data(html):
     return data_list
 
 
-def write_db(items):
+def write_db(competitor_products):
     meta = {'updated_count': 0, 'created_count': 0}
-    urls = [item.get('url') for item in items if item.get('url')]
-    Item.objects.filter(url__in=urls).update(status=False)
+    urls = [competitor_product.get('url') for competitor_product in competitor_products if competitor_product.get('url')]
+    CompetitorProduct.objects.filter(url__in=urls).update(status=False)
 
-    for item in items:
-        url = item.get('url')
+    for competitor_product in competitor_products:
+        url = competitor_product.get('url')
         if url:
             try:
-                price = Decimal(item.get('price'))
+                price = Decimal(competitor_product.get('price'))
             except InvalidOperation:
                 price = None
             try:
-                id_product = int(item.get('id_product'))
+                id_product = int(competitor_product.get('id_product'))
             except ValueError:
                 id_product = None
 
-            categoryId = item.get('categoryId')
-            categoryName = item.get('categoryName')
-            vendorName = item.get('vendorName')
-            groupId = item.get('groupId')
-            shop = item.get('shop')
-            name = item.get('name')
+            categoryId = competitor_product.get('categoryId')
+            categoryName = competitor_product.get('categoryName')
+            vendorName = competitor_product.get('vendorName')
+            groupId = competitor_product.get('groupId')
+            shop = competitor_product.get('shop')
+            name = competitor_product.get('name')
 
-            _, created = Item.objects.update_or_create(url=url, defaults={'id_product': id_product,
+            _, created = CompetitorProduct.objects.update_or_create(url=url, defaults={'id_product': id_product,
                                                                           'name': name,
                                                                           'price': price,
                                                                           'categoryId': categoryId,
