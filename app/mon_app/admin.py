@@ -6,42 +6,65 @@ from import_export.admin import ImportExportModelAdmin
 def status_true(modeladmin, request, queryset):
     rows_updated = queryset.update(status='True')
     if rows_updated == 1:
-        message_bit = "1 CompetitorsProduct was"
+        message_bit = "1 Competitor`s products was"
     else:
-        message_bit = "%s CompetitorsProducts were" % rows_updated
+        message_bit = "%s Competitor`s products were" % rows_updated
     modeladmin.message_user(request, "%s successfully marked as True." % message_bit)
-
-
-status_true.short_description = "Активный статус"
 
 
 def status_false(modeladmin, request, queryset):
     rows_updated = queryset.update(status='False')
     if rows_updated == 1:
-        message_bit = "1 CompetitorsProduct was"
+        message_bit = "1 Competitor`s product was"
     else:
-        message_bit = "%s CompetitorsProducts were" % rows_updated
+        message_bit = "%s Competitor`s products were" % rows_updated
     modeladmin.message_user(request, "%s successfully marked as False." % message_bit)
 
 
-status_false.short_description = "Неактивный статус"
-
-
 def start_matching(modeladmin, request, queryset):
+    products_competitor = queryset.values('id_product', 'name', 'price', 'shop')
+
+    for product_competitor in products_competitor:
+        shop_competitor = product_competitor.get('shop')
+        id_product_competitor = product_competitor.get('id_product')
+        name_competitor = product_competitor.get('name')
+        price_competitor = product_competitor.get('price')
+
+        product_my = MyProduct.objects.filter(id_product=id_product_competitor).values('id_product', 'name', 'price')[0]
+        id_product_my = product_my.get('id_product')
+        name_my = product_my.get('name')
+        price_my = product_my.get('price')
+
+        diff = price_my - price_competitor
+
+        if diff < 0:
+            status = True
+        elif diff > 0:
+            status = False
+        else:
+            status = None
+
+        Match.objects.update_or_create(id_product_my=id_product_competitor, defaults={'id_product_my': id_product_my,
+                                                                                      'name_my': name_my,
+                                                                                      'price_my': price_my,
+                                                                                      'shop_competitor': shop_competitor,
+                                                                                      'name_competitor': name_competitor,
+                                                                                      'price_competitor': price_competitor,
+                                                                                      'diff': diff,
+                                                                                      'status': status
+                                                                                      })
     modeladmin.message_user(request, "Объекты сравнены")
-
-
-start_matching.short_description = "Сравнить"
 
 
 class CompetitorsProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'created', 'status')
     ordering = ['name']
     actions = [status_true, status_false, start_matching]
-    fieldsets = [('Основная информация', {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'url']}),
+    fieldsets = [('Основная информация', {'fields': ['id_product', 'name', 'price', 'categoryName',
+                                                     'vendorName', 'shop', 'url']}),
                  ('Дополнительная информация', {'fields': ['categoryId', 'groupId', 'status']})]
     list_filter = ['categoryName', 'shop', 'created', 'vendorName']
-    search_fields = ['name']
+    search_fields = ['name', 'id_product']
 
 
 class MyProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
@@ -49,20 +72,26 @@ class MyProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     ordering = ['name']
     actions = [status_true, status_false, start_matching]
     fieldsets = [('Основная информация', {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'url']}),
-                 ('Дополнительная информация', {'fields': ['categoryId', 'groupId', 'status']})]
+                 ('Дополнительная информация', {'fields': ['categoryId', 'status']})]
     list_filter = ['categoryName', 'created', 'vendorName']
-    search_fields = ['name']
+    search_fields = ['name', 'id_product']
 
 
 class MatchAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ('id_product_my', 'name_my', 'price_my', 'id_product_conc', 'name_conc', 'price_conc', 'diff', 'status', 'created')
+    list_display = ('id_product_my', 'name_my', 'shop_competitor', 'name_competitor', 'price_my',
+                    'price_competitor', 'diff', 'status', 'created')
     ordering = ['name_my']
     actions = [status_true, status_false]
-    fieldsets = [('Первый товар', {'fields': ['id_product_my', 'name_my', 'price_my']}),
-                 ('Второй товар', {'fields': ['id_product_conc', 'name_conc', 'price_conc']})]
-    list_filter = ['created']
-    search_fields = ['name_my']
+    fieldsets = [('Артикул', {'fields': ['id_product_my']}),
+                 ('Мой товар', {'fields': ['name_my', 'price_my']}),
+                 ('Товар конкурента', {'fields': ['shop_competitor', 'name_competitor', 'price_competitor']})]
+    list_filter = ['created', 'shop_competitor']
+    search_fields = ['name_my', 'id_product']
 
+
+status_true.short_description = "Активный статус"
+status_false.short_description = "Неактивный статус"
+start_matching.short_description = "Сравнить"
 
 admin.site.register(CompetitorProduct, CompetitorsProductAdmin)
 admin.site.register(MyProduct, MyProductAdmin)

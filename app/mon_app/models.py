@@ -13,7 +13,7 @@ class CompetitorProduct(models.Model):
     categoryName = models.CharField('Категория', max_length=300, blank=True, null=True)
     vendorName = models.CharField('Производитель', max_length=300, blank=True, null=True)
     groupId = models.SlugField('ID группы', max_length=300, blank=True, null=True)
-    url = models.SlugField('Ссылка', max_length=300, unique=True)
+    url = models.CharField('Ссылка', max_length=300, unique=True)
     status = models.BooleanField('Статус', default=True)
     shop = models.CharField('Магазин', max_length=30, blank=True, null=True, choices=shop_choices)
     created = models.DateTimeField('Дата', auto_now_add=True, blank=True, null=True)
@@ -33,7 +33,7 @@ class MyProduct(models.Model):
     categoryId = models.SlugField('ID категории', max_length=300, blank=True, null=True)
     categoryName = models.CharField('Категория', max_length=300, blank=True, null=True)
     vendorName = models.CharField('Производитель', max_length=300, blank=True, null=True)
-    url = models.SlugField('Ссылка', max_length=300, unique=True)
+    url = models.CharField('Ссылка', max_length=300, unique=True)
     status = models.BooleanField('Статус', default=True)
     created = models.DateTimeField('Дата', auto_now_add=True, blank=True, null=True)
 
@@ -46,14 +46,18 @@ class MyProduct(models.Model):
 
 
 class Match(models.Model):
-    id_product_my = models.IntegerField('Артикул MyShop', blank=True, null=True, unique=True)
-    name_my = models.CharField('Имя MyShop', max_length=300, blank=True, null=True)
-    price_my = models.DecimalField('Цена MyShop', blank=True, null=True, max_digits=10, decimal_places=2, unique=True)
-    id_product_conc = models.IntegerField('Артикул конкурента', blank=True, null=True)
-    name_conc = models.CharField('Имя конкурента', max_length=300, blank=True, null=True)
-    price_conc = models.DecimalField('Цена конкурента', blank=True, null=True, max_digits=10, decimal_places=2)
+    Mvideo = "М.видео"
+    Citilink = "Ситилинк"
+    Wildberries = "Wildberries"
+    shop_choices = ((Mvideo, 'М.видео'), (Citilink, 'Ситилинк'), (Wildberries, 'Wildberries'))
+    id_product_my = models.IntegerField('Артикул товара', blank=True, null=True, unique=True)
+    name_my = models.CharField('Мой товар', max_length=300, blank=True, null=True)
+    price_my = models.DecimalField('Моя цена', blank=True, null=True, max_digits=10, decimal_places=2, unique=True)
+    shop_competitor = models.CharField('Конкурент', max_length=30, blank=True, null=True, choices=shop_choices)
+    name_competitor = models.CharField('Товар конкурента', max_length=300, blank=True, null=True)
+    price_competitor = models.DecimalField('Цена конкурента', blank=True, null=True, max_digits=10, decimal_places=2)
     diff = models.DecimalField('Разница', blank=True, null=True, max_digits=10, decimal_places=2, default='0')
-    status = models.BooleanField('Статус', default=True)
+    status = models.BooleanField('Моя цена ниже?', blank=True, null=True)
     created = models.DateTimeField('Дата сравнения', auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
