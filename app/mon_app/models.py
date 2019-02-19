@@ -50,11 +50,12 @@ class Match(models.Model):
     Citilink = "Ситилинк"
     Wildberries = "Wildberries"
     shop_choices = ((Mvideo, 'М.видео'), (Citilink, 'Ситилинк'), (Wildberries, 'Wildberries'))
-    id_product_my = models.IntegerField('Артикул товара', blank=True, null=True, unique=True)
+    id_product = models.IntegerField('Артикул товара', blank=True, null=True, unique=True)
     name_my = models.CharField('Мой товар', max_length=300, blank=True, null=True)
     price_my = models.DecimalField('Моя цена', blank=True, null=True, max_digits=10, decimal_places=2, unique=True)
     shop_competitor = models.CharField('Конкурент', max_length=30, blank=True, null=True, choices=shop_choices)
     name_competitor = models.CharField('Товар конкурента', max_length=300, blank=True, null=True)
+    url = models.CharField('Ссылка', max_length=300, blank=True, null=True)
     price_competitor = models.DecimalField('Цена конкурента', blank=True, null=True, max_digits=10, decimal_places=2)
     diff = models.DecimalField('Разница', blank=True, null=True, max_digits=10, decimal_places=2, default='0')
     status = models.BooleanField('Моя цена ниже?', blank=True, null=True)
