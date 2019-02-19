@@ -51,7 +51,7 @@ class Match(models.Model):
     Wildberries = "Wildberries"
     shop_choices = ((Mvideo, 'М.видео'), (Citilink, 'Ситилинк'), (Wildberries, 'Wildberries'))
     id_product = models.IntegerField('Артикул товара', blank=True, null=True, unique=True)
-    name_my = models.CharField('Мой товар', max_length=300, blank=True, null=True)
+    name_my = models.CharField('Товар', max_length=300, blank=True, null=True)
     price_my = models.DecimalField('Моя цена', blank=True, null=True, max_digits=10, decimal_places=2)
     shop_competitor = models.CharField('Конкурент', max_length=30, blank=True, null=True, choices=shop_choices)
     name_competitor = models.CharField('Товар конкурента', max_length=300, blank=True, null=True)

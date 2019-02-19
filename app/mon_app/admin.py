@@ -48,7 +48,7 @@ class MyProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
 
 class MatchAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ('id_product', 'name_my', 'shop_competitor', 'name_competitor', 'price_my',
+    list_display = ('id_product', 'name_my', 'shop_competitor', 'price_my',
                     'price_competitor', 'diff', 'status', 'created')
     ordering = ['name_my']
     actions = [save_graph_action]

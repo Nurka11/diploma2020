@@ -38,12 +38,11 @@ def start_matching_competitor_util(modeladmin, request, queryset):
 
         diff = price_my - price_competitor
 
-        if diff < 0:
+        if diff <= 0:
             status = True
         elif diff > 0:
             status = False
-        else:
-            status = None
+
 
         Match.objects.update_or_create(id_product=id_product_competitor,
                                        defaults={'id_product': id_product_my,
