@@ -62,7 +62,9 @@ class Match(models.Model):
     created = models.DateTimeField('Дата сравнения', auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
-        return self.name_my
+        id_product = ('Товар с артикулом {} : {}').format(str(self.id_product),self.name_my)
+        # id_product = 'Товар с артикулом ' + str(self.id_product) + ': ' + self.name_my
+        return id_product
 
     class Meta:
         verbose_name = 'сравнение'
