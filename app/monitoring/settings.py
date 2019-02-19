@@ -1,10 +1,10 @@
 import os
 
-ADMIN_SITE_HEADER = "Parsing Admin Panel"
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'uxmi(u8wt89x^z=e&*ghzpiswcr+d*vfteidx$69_#8wzbdsl&'
+SECRET_KEY = 'ju6h12ev!&l_r#byfz3p57&gqamng0mh%(9zh6d6rp-y=%&%bw'
+
+ADMIN_SITE_HEADER = "Parsing Admin Panel"
 
 DEBUG = True
 

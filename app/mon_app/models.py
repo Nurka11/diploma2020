@@ -66,6 +66,7 @@ class Match(models.Model):
         # id_product = 'Товар с артикулом ' + str(self.id_product) + ': ' + self.name_my
         return id_product
 
+
     class Meta:
         verbose_name = 'сравнение'
         verbose_name_plural = 'сравнения'

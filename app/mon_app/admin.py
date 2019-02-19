@@ -45,16 +45,17 @@ def start_matching_competitor(modeladmin, request, queryset):
         else:
             status = None
 
-        Match.objects.update_or_create(id_product=id_product_competitor, defaults={'id_product': id_product_my,
-                                                                                      'name_my': name_my,
-                                                                                      'price_my': price_my,
-                                                                                      'shop_competitor': shop_competitor,
-                                                                                      'name_competitor': name_competitor,
-                                                                                      'url': url_competitor,
-                                                                                      'price_competitor': price_competitor,
-                                                                                      'diff': diff,
-                                                                                      'status': status
-                                                                                      })
+        Match.objects.update_or_create(id_product=id_product_competitor,
+                                       defaults={'id_product': id_product_my,
+                                                 'name_my': name_my,
+                                                 'price_my': price_my,
+                                                 'shop_competitor': shop_competitor,
+                                                 'name_competitor': name_competitor,
+                                                 'url': url_competitor,
+                                                 'price_competitor': price_competitor,
+                                                 'diff': diff,
+                                                 'status': status
+                                                 })
     modeladmin.message_user(request, "Объекты сравнены")
 
 
@@ -81,15 +82,16 @@ def start_matching_my(modeladmin, request, queryset):
         else:
             status = None
 
-        Match.objects.update_or_create(id_product=id_product_my, defaults={'id_product': id_product_competitor,
-                                                                                      'name_my': name_my,
-                                                                                      'price_my': price_my,
-                                                                                      'shop_competitor': shop_competitor,
-                                                                                      'name_competitor': name_competitor,
-                                                                                      'price_competitor': price_competitor,
-                                                                                      'diff': diff,
-                                                                                      'status': status
-                                                                                      })
+        Match.objects.update_or_create(id_product=id_product_my,
+                                       defaults={'id_product': id_product_competitor,
+                                                 'name_my': name_my,
+                                                 'price_my': price_my,
+                                                 'shop_competitor': shop_competitor,
+                                                 'name_competitor': name_competitor,
+                                                 'price_competitor': price_competitor,
+                                                 'diff': diff,
+                                                 'status': status
+                                                 })
     modeladmin.message_user(request, "Объекты сравнены")
 
 
