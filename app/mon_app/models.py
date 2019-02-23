@@ -59,13 +59,16 @@ class Match(models.Model):
     price_competitor = models.DecimalField('Цена конкурента', blank=True, null=True, max_digits=10, decimal_places=2)
     diff = models.DecimalField('Разница', blank=True, null=True, max_digits=10, decimal_places=2, default='0')
     status = models.BooleanField('Моя цена ниже?', blank=True, null=True)
-    created = models.DateTimeField('Дата сравнения', auto_now_add=True, blank=True, null=True)
+    created = models.DateTimeField('Дата сравнения', auto_now_add=True, blank=True, null=True,
+                                   help_text="При добавлении нового сравнения вручную дата добавляется <em>автоматически</em>.")
 
     def __str__(self):
         id_product = ('Товар с артикулом {} : {}').format(str(self.id_product),self.name_my)
         # id_product = 'Товар с артикулом ' + str(self.id_product) + ': ' + self.name_my
         return id_product
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'сравнение'

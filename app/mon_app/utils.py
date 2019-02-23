@@ -1,6 +1,7 @@
 from .models import *
 import datetime
 import pylab
+from django.contrib import messages
 
 
 def status_true_util(modeladmin, request, queryset):
@@ -101,7 +102,6 @@ def save_graph_util(modeladmin, request, queryset):
         price_my = product.get('price_my')
         price_competitor = product.get('price_competitor')
         name = product.get('name_my')
-
         data_my = {'name': name,
                    'price': price_my}
 
@@ -109,4 +109,28 @@ def save_graph_util(modeladmin, request, queryset):
                            'price': price_competitor,
                            'name': name}
 
-    pylab.savefig('mon_app/graphs/match_' + str(datetime.datetime.now()).replace(' ', '') + '.png')
+    # pylab.savefig('mon_app/graphs/match_' + str(datetime.datetime.now()).replace(' ', '') + '.png')
+
+
+def analyze_util(modeladmin, request, queryset):
+    count = queryset.count()
+    prices_competitor = queryset.values('price_competitor')
+    prices_my = queryset.values('price_my')
+
+    sum_price_competitor = 0
+    for price_competitor in prices_competitor:
+        sum_price_competitor += price_competitor.get('price_competitor')
+
+    sum_price_my = 0
+    for price_my in prices_my:
+        sum_price_my += price_my.get('price_my')
+
+    avg_competitor = sum_price_competitor/count
+    avg_my = sum_price_my/count
+    if avg_my < avg_competitor:
+        percent_diff = 100 - avg_my / avg_competitor * 100
+        messages.info(request, "Средняя цена у конкурента: {}, средняя цена у меня: {}. Мои товары на {} процентов дешевле.".format(avg_competitor, avg_my, percent_diff))
+    else:
+        percent_diff = 100 - avg_competitor / avg_my * 100
+        messages.error(request, "Средняя цена у конкурента: {}, средняя цена у меня: {}. Мои товары на {} процентов дороже.".format(avg_competitor, avg_my, percent_diff))
+

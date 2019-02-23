@@ -26,6 +26,10 @@ def save_graph_action(modeladmin, request, queryset):
     save_graph_util(modeladmin, request, queryset)
 
 
+def analyze_action(modeladmin, request, queryset):
+    analyze_util(modeladmin, request, queryset)
+
+
 class CompetitorsProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'created', 'status')
     ordering = ['name']
@@ -51,13 +55,14 @@ class MatchAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ('id_product', 'name_my', 'shop_competitor', 'price_my',
                     'price_competitor', 'diff', 'status', 'created')
     ordering = ['name_my']
-    actions = [save_graph_action]
-    fieldsets = [('Артикул', {'fields': ['id_product']}),
+    actions = [save_graph_action, analyze_action]
+    readonly_fields = ['created']
+    fieldsets = [('Сравнение', {'fields': ['id_product', 'created']}),
                  ('Мой товар', {'fields': ['name_my', 'price_my']}),
                  ('Товар конкурента', {'fields': ['shop_competitor', 'url', 'name_competitor', 'price_competitor']})]
     list_filter = ['created', 'shop_competitor', 'status']
     search_fields = ['name_my', 'id_product']
-    change_list_template = "mon_app/heroes_changelist.html"
+    change_list_template = "mon_app/button.html"
 
     def get_urls(self):
         urls = super().get_urls()
@@ -67,7 +72,6 @@ class MatchAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         return my_urls + urls
 
     def set_mortal(self, request):
-        self.model.objects.all().update(status=False)
         self.message_user(request, "Анализ произведен")
         return HttpResponseRedirect("../")
 
