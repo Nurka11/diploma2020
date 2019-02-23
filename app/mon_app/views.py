@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
-from .mvideo import mvideo
-from .citilink import citilink
-from .wildberries import wildberries
+from .parsers.mvideo import mvideo
+from .parsers.citilink import citilink
+from .parsers.wildberries import wildberries
 import re
 
 

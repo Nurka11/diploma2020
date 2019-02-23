@@ -54,21 +54,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'monitoring.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'monitoring',
-#         'USER': 'UserOne',
-#         'PASSWORD': '1',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432'}}
+postgres = True
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'monitoring.db'),
+if postgres:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'monitoring',
+            'USER': 'UserOne',
+            'PASSWORD': '1',
+            'HOST': '127.0.0.1',
+            'PORT': '5432'
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'monitoring.db'),
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
