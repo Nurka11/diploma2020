@@ -81,6 +81,7 @@ status_false.short_description = "Неактивный статус"
 start_matching_competitor.short_description = "Сравнить c моими товарами"
 start_matching_my.short_description = "Сравнить c товарами конкурента"
 save_graph_action.short_description = "Построить график"
+analyze_action.short_description = "Анализ сравнений"
 
 admin.site.register(CompetitorProduct, CompetitorsProductAdmin)
 admin.site.register(MyProduct, MyProductAdmin)
