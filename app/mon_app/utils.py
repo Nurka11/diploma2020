@@ -1,6 +1,5 @@
 from .models import *
 import datetime
-import pylab
 from django.contrib import messages
 
 
@@ -97,17 +96,17 @@ def start_matching_my_util(modeladmin, request, queryset):
 
 def save_graph_util(modeladmin, request, queryset):
     products = queryset.values('shop_competitor', 'price_my', 'price_competitor', 'name_my')
-    for product in products:
-        shops = product.get('shop_competitor')
-        price_my = product.get('price_my')
-        price_competitor = product.get('price_competitor')
-        name = product.get('name_my')
-        data_my = {'name': name,
-                   'price': price_my}
-
-        data_competitor = {"shops": shops,
-                           'price': price_competitor,
-                           'name': name}
+    # for product in products:
+    #     shops = product.get('shop_competitor')
+    #     price_my = product.get('price_my')
+    #     price_competitor = product.get('price_competitor')
+    #     name = product.get('name_my')
+    #     data_my = {'name': name,
+    #                'price': price_my}
+    #
+    #     data_competitor = {"shops": shops,
+    #                        'price': price_competitor,
+    #                        'name': name}
 
     # pylab.savefig('mon_app/graphs/match_' + str(datetime.datetime.now()).replace(' ', '') + '.png')
 
