@@ -1,6 +1,5 @@
 ﻿*.pyc
 /venv
-/venv2
 .idea/
 app/mon_app/__pycache__/
 app/monitoring/__pycache__/
