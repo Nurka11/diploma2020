@@ -2,6 +2,7 @@ from django.urls import path
 
 from mon_app.api.competitor_products_api import *
 from mon_app.api.my_products_api import *
+from mon_app.api.match_api import *
 from .views import *
 
 
@@ -14,4 +15,6 @@ urlpatterns = [
     path('api/productcompetitor/', api_productcompetitor, name='api_productcompetitor_url'),
     path('api/productmy/<id>', api_productmy_id, name='api_productmy_id_url'),
     path('api/productmy/', api_productmy, name='api_productmy_url'),
+    path('api/match/<id>', api_match_id, name='api_match_id_url'),
+    path('api/match/', api_match, name='api_match_url')
 ]
