@@ -32,37 +32,37 @@ def analyze_action(modeladmin, request, queryset):
 
 
 class CompetitorsProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ('id_product', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'created', 'status')
+    list_display = ('id', 'name', 'price', 'categoryName', 'vendorName', 'shop', 'created', 'status')
     ordering = ['name']
     actions = [status_true, status_false, start_matching_competitor]
-    fieldsets = [('Основная информация', {'fields': ['id_product', 'name', 'price', 'categoryName',
+    fieldsets = [('Основная информация', {'fields': ['name', 'price', 'categoryName',
                                                      'vendorName', 'shop', 'url']}),
                  ('Дополнительная информация', {'fields': ['categoryId', 'groupId', 'status']})]
     list_filter = ['categoryName', 'shop', 'created', 'vendorName']
-    search_fields = ['name', 'id_product']
+    search_fields = ['name', 'id']
 
 
 class MyProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ('id_product', 'name', 'price', 'categoryName', 'vendorName', 'created', 'status')
+    list_display = ('id', 'name', 'price', 'categoryName', 'vendorName', 'created', 'status')
     ordering = ['name']
     actions = [status_true, status_false, start_matching_my]
-    fieldsets = [('Основная информация', {'fields': ['id_product', 'name', 'price', 'categoryName', 'vendorName', 'url']}),
+    fieldsets = [('Основная информация', {'fields': ['name', 'price', 'categoryName', 'vendorName', 'url']}),
                  ('Дополнительная информация', {'fields': ['categoryId', 'status']})]
     list_filter = ['categoryName', 'created', 'vendorName']
-    search_fields = ['name', 'id_product']
+    search_fields = ['name', 'id']
 
 
 class MatchAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ('id_product', 'name_my', 'shop_competitor', 'price_my',
+    list_display = ('id', 'name_my', 'shop_competitor', 'price_my',
                     'price_competitor', 'diff', 'status', 'created')
     ordering = ['name_my']
     actions = [analyze_action]
     readonly_fields = ['created']
-    fieldsets = [('Сравнение', {'fields': ['id_product', 'created']}),
+    fieldsets = [('Сравнение', {'fields': ['created']}),
                  ('Мой товар', {'fields': ['name_my', 'price_my']}),
                  ('Товар конкурента', {'fields': ['shop_competitor', 'url', 'name_competitor', 'price_competitor']})]
     list_filter = ['created', 'shop_competitor', 'status']
-    search_fields = ['name_my', 'id_product']
+    search_fields = ['name_my', 'id']
     change_list_template = "mon_app/button.html"
 
     def get_urls(self):

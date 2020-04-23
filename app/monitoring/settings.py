@@ -8,7 +8,7 @@ ADMIN_SITE_HEADER = "Parsing Admin Panel"
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['mamleevruslan43.pythonanywhere.com/', 'localhost']
+ALLOWED_HOSTS = ['mamleevruslan43.pythonanywhere.com/', 'localhost', "*"]
 
 STATIC_URL = '/static/'
 

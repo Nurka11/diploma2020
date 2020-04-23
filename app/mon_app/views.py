@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
-from .parsers.mvideo import mvideo
-from .parsers.citilink import citilink
-from .parsers.wildberries import wildberries
+from .parsers.mvideo import sulpak
+from .parsers.citilink import alser
+from .parsers.wildberries import mechta
 
 
 import re
@@ -30,16 +30,16 @@ def parsing(request):
             if re.match(r'\d\b', page_count) or re.match(r'\d\d\b', page_count) and not re.match('0', page_count):
 
                 # If target_url - mvideo
-                if re.match('https://www.mvideo.ru/', url_target):
-                    mvideo(url_target, page_count)
+                if re.match('https://www.sulpak.kz/', url_target):
+                    sulpak(url_target, page_count)
 
                 # If target_url - citilink
-                elif re.match('https://www.citilink.ru/', url_target):
-                    citilink(url_target, page_count)
+                elif re.match('https://alser.kz/', url_target):
+                    alser(url_target, page_count)
 
                 # If target_url - citilink
-                elif re.match('https://www.wildberries.ru/', url_target):
-                    wildberries(url_target, page_count)
+                elif re.match('https://www.mechta.kz/', url_target):
+                    mechta(url_target, page_count)
 
                 # If target_url invalid
                 else:

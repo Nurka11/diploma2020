@@ -6,7 +6,6 @@ class CompetitorProduct(models.Model):
     Citilink = "Ситилинк"
     Wildberries = "Wildberries"
     shop_choices = ((Mvideo, 'М.видео'), (Citilink, 'Ситилинк'), (Wildberries, 'Wildberries'))
-    id_product = models.IntegerField('Артикул', blank=True, null=True)
     name = models.CharField('Имя', max_length=300, blank=True, null=True)
     price = models.DecimalField('Цена', blank=True, null=True, max_digits=10, decimal_places=2)
     categoryId = models.SlugField('ID категории', max_length=300, blank=True, null=True)
@@ -27,7 +26,6 @@ class CompetitorProduct(models.Model):
 
 
 class MyProduct(models.Model):
-    id_product = models.IntegerField('Артикул', blank=True, null=True)
     name = models.CharField('Имя', max_length=300, blank=True, null=True)
     price = models.DecimalField('Цена', blank=True, null=True, max_digits=10, decimal_places=2)
     categoryId = models.SlugField('ID категории', max_length=300, blank=True, null=True)
@@ -50,7 +48,6 @@ class Match(models.Model):
     Citilink = "Ситилинк"
     Wildberries = "Wildberries"
     shop_choices = ((Mvideo, 'М.видео'), (Citilink, 'Ситилинк'), (Wildberries, 'Wildberries'))
-    id_product = models.IntegerField('Артикул товара', blank=True, null=True, unique=True)
     name_my = models.CharField('Товар', max_length=300, blank=True, null=True)
     price_my = models.DecimalField('Моя цена', blank=True, null=True, max_digits=10, decimal_places=2)
     shop_competitor = models.CharField('Конкурент', max_length=30, blank=True, null=True, choices=shop_choices)
@@ -63,7 +60,7 @@ class Match(models.Model):
                                    help_text="При добавлении нового сравнения вручную дата добавляется автоматически.")
 
     def __str__(self):
-        id_product = 'Товар с артикулом {} : {}'.format(str(self.id_product), self.name_my)
+        id_product = 'Товар с артикулом {} : {}'.format(str(self.id), self.name_my)
         # id_product = 'Товар с артикулом ' + str(self.id_product) + ': ' + self.name_my
         return id_product
 

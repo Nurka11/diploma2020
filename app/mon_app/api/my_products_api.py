@@ -14,7 +14,6 @@ def api_productmy_id(request, id):
     if request.method == "GET":
         product = MyProduct.objects.get(id=id)
         product_json = {"id": product.id,
-                        "id_product": product.id_product,
                         "name": product.name,
                         "price": product.price,
                         "categoryId": product.categoryId,
@@ -46,7 +45,6 @@ def api_productmy_id(request, id):
             updated_product = MyProduct.objects.get(id=id)
             return JsonResponse({"updated": updated,
                                  "id": updated_product.id,
-                                 "id_product": updated_product.id_product,
                                  "name": updated_product.name,
                                  "price": updated_product.price,
                                  "categoryId": updated_product.categoryId,
@@ -65,7 +63,6 @@ def api_productmy_id(request, id):
         return JsonResponse({
             "deleted": 1,
             "id": deleted_product.id,
-            "id_product": deleted_product.id_product,
             "name": deleted_product.name,
             "price": deleted_product.price,
             "categoryId": deleted_product.categoryId,
@@ -87,7 +84,7 @@ def api_productmy(request):
         new_product_name = new_product.get('name')
         if new_product_url and new_product_name:
             product, posted = MyProduct.objects.get_or_create(url=new_product_url,
-                                                                                  defaults={'id_product': new_product.get('id_product'),
+                                                                                  defaults={
                                                                                             'name': new_product_name,
                                                                                             'price': new_product.get('price'),
                                                                                             'categoryId': new_product.get('categoryId'),
@@ -97,7 +94,6 @@ def api_productmy(request):
                                                                                             'created': new_product.get('created')})
             return JsonResponse({"posted": posted,
                                  "id": product.id,
-                                 "id_product": product.id_product,
                                  "name": product.name,
                                  "price": product.price,
                                  "categoryId": product.categoryId,
@@ -113,7 +109,6 @@ def api_productmy(request):
     if request.method == "GET":
         products = MyProduct.objects.all()
         products_json = [{"id": product.id,
-                          "id_product": product.id_product,
                           "name": product.name,
                           "price": product.price,
                           "categoryId": product.categoryId,

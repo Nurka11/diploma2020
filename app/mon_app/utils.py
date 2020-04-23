@@ -21,17 +21,15 @@ def status_false_util(modeladmin, request, queryset):
 
 
 def start_matching_competitor_util(modeladmin, request, queryset):
-    products_competitor = queryset.values('id_product', 'name', 'price', 'shop', 'url')
+    products_competitor = queryset.values('id', 'name', 'price', 'shop', 'url')
 
     for product_competitor in products_competitor:
         shop_competitor = product_competitor.get('shop')
-        id_product_competitor = product_competitor.get('id_product')
         name_competitor = product_competitor.get('name')
         price_competitor = product_competitor.get('price')
         url_competitor = product_competitor.get('url')
 
-        product_my = MyProduct.objects.filter(id_product=id_product_competitor).values('id_product', 'name', 'price')[0]
-        id_product_my = product_my.get('id_product')
+        product_my = MyProduct.objects.values('id', 'name', 'price')[0]
         name_my = product_my.get('name')
         price_my = product_my.get('price')
 
@@ -42,8 +40,8 @@ def start_matching_competitor_util(modeladmin, request, queryset):
         elif diff > 0:
             status = False
 
-        Match.objects.update_or_create(id_product=id_product_competitor,
-                                       defaults={'id_product': id_product_my,
+        Match.objects.update_or_create(
+                                       defaults={
                                                  'name_my': name_my,
                                                  'price_my': price_my,
                                                  'shop_competitor': shop_competitor,
@@ -57,16 +55,14 @@ def start_matching_competitor_util(modeladmin, request, queryset):
 
 
 def start_matching_my_util(modeladmin, request, queryset):
-    products_my = queryset.values('id_product', 'name', 'price')
+    products_my = queryset.values('id', 'name', 'price')
 
     for product_my in products_my:
-        id_product_my = product_my.get('id_product')
         name_my = product_my.get('name')
         price_my = product_my.get('price')
 
-        product_competitor = CompetitorProduct.objects.filter(id_product=id_product_my).values('shop', 'id_product', 'name', 'price')[0]
+        product_competitor = CompetitorProduct.objects.values('shop', 'id', 'name', 'price')[0]
         shop_competitor = product_competitor.get('shop')
-        id_product_competitor = product_competitor.get('id_product')
         name_competitor = product_competitor.get('name')
         price_competitor = product_competitor.get('price')
 
@@ -79,8 +75,8 @@ def start_matching_my_util(modeladmin, request, queryset):
         else:
             status = None
 
-        Match.objects.update_or_create(id_product=id_product_my,
-                                       defaults={'id_product': id_product_competitor,
+        Match.objects.update_or_create(
+                                       defaults={
                                                  'name_my': name_my,
                                                  'price_my': price_my,
                                                  'shop_competitor': shop_competitor,

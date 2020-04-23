@@ -89,7 +89,6 @@ def api_productcompetitor(request):
         if new_product_url and new_product_name:
             product, posted = CompetitorProduct.objects.get_or_create(url=new_product_url,
                                                                       defaults={'name': new_product_name,
-                                                                                'id_product': new_product.get('id_product'),
                                                                                 'price': new_product.get('price'),
                                                                                 'categoryId': new_product.get('categoryId'),
                                                                                 'categoryName': new_product.get('categoryName'),
@@ -100,7 +99,6 @@ def api_productcompetitor(request):
                                                                                 'created': new_product.get('created')})
             return JsonResponse({"posted": posted,
                                  "id": product.id,
-                                 "id_product": product.id_product,
                                  "name": product.name,
                                  "price": product.price,
                                  "categoryId": product.categoryId,
@@ -118,7 +116,6 @@ def api_productcompetitor(request):
     if request.method == "GET":
         products = CompetitorProduct.objects.all()
         products_json = [{"id": product.id,
-                          "id_product": product.id_product,
                           "name": product.name,
                           "price": product.price,
                           "categoryId": product.categoryId,
