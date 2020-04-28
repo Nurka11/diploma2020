@@ -101,6 +101,7 @@ class LineChartJSONView(BaseLineChartView):
             for i in range(len(conditions)):
                 if product.shop == conditions[i]:
                     prices[i] = int(product.price)
+                    break
             if product.shop not in conditions:
                 prices[3] = int(product.price)
         return [prices]

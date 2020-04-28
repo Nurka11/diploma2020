@@ -139,7 +139,7 @@ SUIT_CONFIG = {
         {'app': 'mon_app', 'icon': 'icon-cog', 'url': '/admin/mon_app/'},
         {'label': 'graphic', 'icon': 'icon-question-sign', 'url': '/graphic'},
         {'app': 'auth', 'icon': 'icon-lock', 'models': ('user', 'group')},
-        {'label': 'Помощь', 'icon': 'icon-question-sign', 'url': '/support/'},
+        {'label': 'Помощь', 'icon': 'icon-graphic', 'url': '/support/'},
     ),
 
     # misc

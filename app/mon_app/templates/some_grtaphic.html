@@ -31,6 +31,7 @@
             data: []
         });
         var all_data = [];
+        var dataset_all;
         var color_all_massiv = ["red", "blue", "green", "black"];
         function prefixFunction() {
             var input = document.getElementById("input").value;
@@ -41,6 +42,7 @@
                 data:{"word": input },
                 dataType: "json",
                  success: function (response) {
+
                      response.forEach((element) => {
                          var button = '<button id="'+ element.id +'" type="button" value="'+ element.name +'" class="list-group-item list-group-item-action" onclick="onclick_button_graphic(this.id)">' + element.name +'</button>'
                           $("#list-group").append(button)
@@ -55,13 +57,17 @@
              var element_name = document.getElementById(""+id).value;
 
             if (all_data.length < 4){
+
                 $.ajax({
                     type: "GET",
                     url: "{% url 'line_chart_json' %}",
                     data:{"name": element_name, "id": id },
                     dataType: "json",
                     success: function (response) {
-                        var ctx = $("#myChart").get(0).getContext("2d");
+                        console.log(response)
+                        console.log("response")
+
+
                         var i = all_data.length
                         response.datasets.forEach((element) => {
                             element.fill = false;
@@ -72,12 +78,14 @@
                             element.lineTension = 0;
                             element.pointRadius = 6
                             i = i + 1
-                            all_data.push(element)
                         })
-                        response.datasets = all_data
+                        all_data = all_data.concat(response.datasets)
                         new Chart(ctx, {
                             type: 'line',
-                            data: response
+                            data: {
+                                "labels": response.labels,
+                                "datasets": all_data,
+                            }
                         });
                     },
                     error: function (response) {
