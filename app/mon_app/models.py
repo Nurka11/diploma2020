@@ -2,10 +2,10 @@ from django.db import models
 
 
 class CompetitorProduct(models.Model):
-    Mvideo = "М.видео"
-    Citilink = "Ситилинк"
-    Wildberries = "Wildberries"
-    shop_choices = ((Mvideo, 'М.видео'), (Citilink, 'Ситилинк'), (Wildberries, 'Wildberries'))
+    Alser = "Alser"
+    Sulpak = "Sulpak"
+    Mechta = "Mechta"
+    shop_choices = ((Alser, 'Alser'), (Sulpak, 'Sulpak'), (Mechta, 'Mechta'))
     name = models.CharField('Имя', max_length=300, blank=True, null=True)
     price = models.DecimalField('Цена', blank=True, null=True, max_digits=10, decimal_places=2)
     categoryId = models.SlugField('ID категории', max_length=300, blank=True, null=True)

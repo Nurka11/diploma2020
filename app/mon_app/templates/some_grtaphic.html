@@ -1,0 +1,94 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>django-chartjs line chart demo</title>
+        <script src="{% static 'js/excanvas.js' %}"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+    <div class="row" style="padding: 10px;margin:auto">
+        <div class="col-7">
+            <h1>Текущая стоимость товаров</h1>
+            <canvas id="myChart"  ></canvas>
+        </div>
+        <div class="col-5" style="height: 100vh;">
+            <input id="input" type="text" class="form-control" oninput="prefixFunction()" >
+            <div style="margin-top: 20px;">
+                <button type="button" class="list-group-item list-group-item-action active">
+                      Search Result
+                  </button>
+                <div id="list-group" class="list-group">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+    <script type="text/javascript">
+        var ctx = $("#myChart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'line',
+            data: []
+        });
+        var all_data = [];
+        var color_all_massiv = ["red", "blue", "green", "black"];
+        function prefixFunction() {
+            var input = document.getElementById("input").value;
+            $("#list-group").empty();
+            $.ajax({
+                type: "GET",
+                url: "{% url 'get_with_prefix' %}",
+                data:{"word": input },
+                dataType: "json",
+                 success: function (response) {
+                     response.forEach((element) => {
+                         var button = '<button id="'+ element.id +'" type="button" value="'+ element.name +'" class="list-group-item list-group-item-action" onclick="onclick_button_graphic(this.id)">' + element.name +'</button>'
+                          $("#list-group").append(button)
+                     })
+                },
+                error: function (response) {
+                alert(response["responseJSON"]["error"]);
+            }
+            });
+        }
+        function onclick_button_graphic(id){
+             var element_name = document.getElementById(""+id).value;
+
+            if (all_data.length < 4){
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'line_chart_json' %}",
+                    data:{"name": element_name, "id": id },
+                    dataType: "json",
+                    success: function (response) {
+                        var ctx = $("#myChart").get(0).getContext("2d");
+                        var i = all_data.length
+                        response.datasets.forEach((element) => {
+                            element.fill = false;
+                            element.backgroundColor = "transparent";
+                            element.borderColor = color_all_massiv[i]
+                            element.pointBackgroundColor = color_all_massiv[i]
+                            element.pointBorderColor = "black"
+                            element.lineTension = 0;
+                            element.pointRadius = 6
+                            i = i + 1
+                            all_data.push(element)
+                        })
+                        response.datasets = all_data
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: response
+                        });
+                    },
+                    error: function (response) {
+                        alert(response["responseJSON"]["error"]);
+                    }
+                });
+            }
+            else{
+                alert("Максимум 4 товара")
+            }
+        }
+        </script>
+    </body>
+</html>

@@ -19,10 +19,12 @@ DJANGO_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'rest_framework'
 ]
 
 THIRD_PARTY_APPS = [
+    'chartjs',
     'corsheaders',
     'debug_toolbar',
     'import_export'
@@ -135,6 +137,7 @@ SUIT_CONFIG = {
     'MENU': (
         # 'sites',
         {'app': 'mon_app', 'icon': 'icon-cog', 'url': '/admin/mon_app/'},
+        {'label': 'graphic', 'icon': 'icon-question-sign', 'url': '/graphic'},
         {'app': 'auth', 'icon': 'icon-lock', 'models': ('user', 'group')},
         {'label': 'Помощь', 'icon': 'icon-question-sign', 'url': '/support/'},
     ),
