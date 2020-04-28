@@ -44,10 +44,10 @@ class MyProduct(models.Model):
 
 
 class Match(models.Model):
-    Mvideo = "М.видео"
-    Citilink = "Ситилинк"
-    Wildberries = "Wildberries"
-    shop_choices = ((Mvideo, 'М.видео'), (Citilink, 'Ситилинк'), (Wildberries, 'Wildberries'))
+    Alser = "Alser"
+    Sulpak = "Sulpak"
+    Mechta = "Mechta"
+    shop_choices = ((Alser, 'Alser'), (Sulpak, 'Sulpak'), (Mechta, 'Mechta'))
     name_my = models.CharField('Товар', max_length=300, blank=True, null=True)
     price_my = models.DecimalField('Моя цена', blank=True, null=True, max_digits=10, decimal_places=2)
     shop_competitor = models.CharField('Конкурент', max_length=30, blank=True, null=True, choices=shop_choices)

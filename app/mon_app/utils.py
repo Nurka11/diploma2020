@@ -39,18 +39,10 @@ def start_matching_competitor_util(modeladmin, request, queryset):
             status = True
         elif diff > 0:
             status = False
-
-        Match.objects.update_or_create(
-                                       defaults={
-                                                 'name_my': name_my,
-                                                 'price_my': price_my,
-                                                 'shop_competitor': shop_competitor,
-                                                 'name_competitor': name_competitor,
-                                                 'url': url_competitor,
-                                                 'price_competitor': price_competitor,
-                                                 'diff': diff,
-                                                 'status': status
-                                                 })
+        obj, created = Match.objects.update_or_create(
+            name_my=name_my, price_my=price_my, shop_competitor=shop_competitor, name_competitor=name_competitor,
+            url=url_competitor, price_competitor=price_competitor, diff=diff, status=status
+        )
     modeladmin.message_user(request, "Объекты сравнены")
 
 
@@ -75,16 +67,11 @@ def start_matching_my_util(modeladmin, request, queryset):
         else:
             status = None
 
-        Match.objects.update_or_create(
-                                       defaults={
-                                                 'name_my': name_my,
-                                                 'price_my': price_my,
-                                                 'shop_competitor': shop_competitor,
-                                                 'name_competitor': name_competitor,
-                                                 'price_competitor': price_competitor,
-                                                 'diff': diff,
-                                                 'status': status
-                                                 })
+        obj, created = Match.objects.update_or_create(
+            name_my=name_my, price_my=price_my, shop_competitor=shop_competitor, name_competitor=name_competitor,
+            price_competitor=price_competitor, diff=diff, status=status
+        )
+
     modeladmin.message_user(request, "Объекты сравнены")
 
 

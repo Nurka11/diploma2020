@@ -7,11 +7,18 @@
     </head>
     <body>
     <div class="row" style="padding: 10px;margin:auto">
-        <div class="col-7">
-            <h1>Текущая стоимость товаров</h1>
+        <div class="col-12" style="height: 100vh">
+            <div class="d-flex align-items-center justify-content-center">
+                <h1>Текущая стоимость товаров</h1>
+                <button
+                        id="search_down"
+                        style="margin-left: 150px;"
+                        class="btn btn-info"
+                > Search </button>
+            </div>
             <canvas id="myChart"  ></canvas>
         </div>
-        <div class="col-5" style="height: 100vh;">
+        <div id="search" class="col-5" style="height: 100vh;">
             <input id="input" type="text" class="form-control" oninput="prefixFunction()" >
             <div style="margin-top: 20px;">
                 <button type="button" class="list-group-item list-group-item-action active">
@@ -25,6 +32,11 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
     <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
     <script type="text/javascript">
+        $("#search_down").click(function() {
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#search").offset().top - 10
+            }, 2000);
+        });
         var ctx = $("#myChart").get(0).getContext("2d");
         new Chart(ctx, {
             type: 'line',
@@ -44,7 +56,7 @@
                  success: function (response) {
 
                      response.forEach((element) => {
-                         var button = '<button id="'+ element.id +'" type="button" value="'+ element.name +'" class="list-group-item list-group-item-action" onclick="onclick_button_graphic(this.id)">' + element.name +'</button>'
+                         var button = '<button id="'+ element.id +'" type="button" value="'+ element.name +'" class="list-group-item list-group-item-action top_scroll" onclick="onclick_button_graphic(this.id)">' + element.name +'</button>'
                           $("#list-group").append(button)
                      })
                 },
@@ -54,6 +66,9 @@
             });
         }
         function onclick_button_graphic(id){
+             $([document.documentElement, document.body]).animate({
+                    scrollTop: 0
+                }, 1000);
              var element_name = document.getElementById(""+id).value;
 
             if (all_data.length < 4){
