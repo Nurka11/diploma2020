@@ -1,3 +1,4 @@
+
 (function () {
     // Browser timing remains hidden unless we can successfully access the performance object
     var perf = window.performance || window.msPerformance ||

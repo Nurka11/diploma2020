@@ -1,3 +1,4 @@
+
 (function($) {
   $(document).on('ready', function() {
     var $actionsSelect, $formatsElement;
