@@ -14,9 +14,9 @@ from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
 
 # local imports
-from .parsers.mvideo import sulpak
-from .parsers.citilink import alser
-from .parsers.wildberries import mechta
+from .parsers.sulpak import sulpak
+from .parsers.alser import alser
+from .parsers.mechta import mechta
 from .models import CompetitorProduct
 from .serializers import PrefixSerializer
 
@@ -49,11 +49,11 @@ def parsing(request):
                 if re.match('https://www.sulpak.kz/', url_target):
                     sulpak(url_target, page_count)
 
-                # If target_url - citilink
+                # If target_url - alser
                 elif re.match('https://alser.kz/', url_target):
                     alser(url_target, page_count)
 
-                # If target_url - citilink
+                # If target_url - mecta
                 elif re.match('https://www.mechta.kz/', url_target):
                     mechta(url_target, page_count)
 
