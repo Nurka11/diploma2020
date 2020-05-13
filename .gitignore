@@ -1,0 +1,5 @@
+﻿*.pyc
+/venv
+.idea/
+app/mon_app/__pycache__/
+app/monitoring/__pycache__/ 

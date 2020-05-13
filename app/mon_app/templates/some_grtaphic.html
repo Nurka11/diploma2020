@@ -1,0 +1,125 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>django-chartjs line chart demo</title>
+        <script src="{% static 'js/excanvas.js' %}"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+    <div class="row" style="padding: 10px;margin:auto">
+        <div class="col-12" style="height: 100vh">
+            <div class="d-flex align-items-center justify-content-center">
+                <h1>Текущая стоимость товаров</h1>
+                <button
+                        id="search_down"
+                        style="margin-left: 150px;"
+                        class="btn btn-info"
+                > Search </button>
+            </div>
+            <canvas id="myChart"  ></canvas>
+        </div>
+        <div id="search" class="col-5" style="height: 100vh;">
+            <input id="input" type="text" class="form-control" oninput="prefixFunction()" >
+            <div style="margin-top: 20px;">
+                <button type="button" class="list-group-item list-group-item-action active">
+                      Search Result
+                  </button>
+                <div id="list-group" class="list-group">
+                </div>
+            </div>
+        </div>
+        <div id="add_all" style="display: none">
+            <button class="btn btn-info" onclick="add_all_element()">
+            Add all
+            </button>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+    <script type="text/javascript">
+        $("#search_down").click(function() {
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#search").offset().top - 10
+            }, 2000);
+        });
+        var ctx = $("#myChart").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'line',
+            data: []
+        });
+        var all_data = [];
+        var dataset_all = [];
+
+        function add_all_element(){
+            dataset_all.forEach((element) => {
+                onclick_button_graphic(element.id)
+            })
+            document.getElementById("input").value = "";
+            document.getElementById('add_all').style = "none"
+        }
+
+        function prefixFunction() {
+            var input = document.getElementById("input").value;
+            $("#list-group").empty();
+            $.ajax({
+                type: "GET",
+                url: "{% url 'get_with_prefix' %}",
+                data:{"word": input },
+                dataType: "json",
+                 success: function (response) {
+                     response.forEach((element) => {
+                         var button = '<button id="'+ element.id +'" type="button" value="'+ element.name +'" class="list-group-item list-group-item-action top_scroll" onclick="onclick_button_graphic(this.id)">' + element.name +'</button>'
+                          $("#list-group").append(button)
+                     })
+                     if (response.length == 0){
+                         document.getElementById('add_all').style = "none"
+                     }else{
+                         document.getElementById('add_all').style = "flex"
+                     }
+                     dataset_all = response;
+                },
+                error: function (response) {
+                alert(response["responseJSON"]["error"]);
+            }
+            });
+        }
+        function onclick_button_graphic(id){
+             $([document.documentElement, document.body]).animate({
+                    scrollTop: 0
+                }, 1000);
+             var element_name = document.getElementById(""+id).value;
+             $.ajax({
+                    type: "GET",
+                    url: "{% url 'line_chart_json' %}",
+                    data:{"name": element_name, "id": id },
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response)
+                        console.log("response")
+                        response.datasets.forEach((element) => {
+                            var bored_background = "#" + Math.floor(Math.random()*16777215).toString(16);
+                            element.fill = false;
+                            element.backgroundColor = "transparent";
+                            element.borderColor = bored_background;
+                            element.pointBackgroundColor = bored_background;
+                            element.pointBorderColor = "black"
+                            element.lineTension = 0;
+                            element.pointRadius = 6
+                        })
+                        all_data = all_data.concat(response.datasets)
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                "labels": response.labels,
+                                "datasets": all_data,
+                            }
+                        });
+                    },
+                    error: function (response) {
+                        alert(response["responseJSON"]["error"]);
+                    }
+                });
+        }
+        </script>
+    </body>
+</html>
